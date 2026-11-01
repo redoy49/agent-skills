@@ -1,0 +1,3 @@
+# markdown + shell only; keep LF everywhere so clones on any OS behave the same
+* text=auto eol=lf
+*.sh text eol=lf
