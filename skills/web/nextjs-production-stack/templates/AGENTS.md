@@ -17,21 +17,46 @@
 - **New project:** start at Main Flow step 1 and use every step.
 - **Existing project:** do not run the Setup scaffold. First do a read-only audit (change no code): read the codebase, compare it with the `nextjs-production-stack` skill, write `ARCHITECTURE.md` (current state) and `PRD.md` (current features, plus each gap as its own feature: package manager, database, auth, tests, CI, Sentry). Then use the Feature Flow for every change. Match existing patterns, and ask before each tool or database change.
 
-## Workflow (text state machine — the gates are rules, not a picture)
+## Workflow Diagrams
 
-**Main Flow — once per project:**
-`1 Idea` → `2 PRD.md` → `3 UI-UX` → `4 ARCHITECTURE.md` → `5 Setup` → `6 Build` → `7 Final QA` → `8 Deploy` → `9 Maintain`
+### Main Flow (once per project, top to bottom)
 
-- `6 Build` runs the Feature Flow once per feature until `PRD.md` has none left.
-- Requirement changed (from `6` or `9`): go back to `2`, update `PRD.md`, get approval, then code.
+```mermaid
+flowchart TD
+    A["1. Idea / Planning"] --> B["2. PRD"]
+    B --> C["3. UI/UX Design"]
+    C --> D["4. Technical Architecture"]
+    D --> E["5. Project Setup"]
+    E --> F["6. Build (Feature by Feature)"]
+    F --> G{"More features left in PRD.md?"}
+    G -- yes --> F
+    G -- no --> H["7. Final QA"]
+    H --> I["8. Deploy"]
+    I --> J["9. Maintenance"]
+    F -. "requirement changed: update PRD.md first" .-> B
+    J -. "new feedback or request" .-> B
+```
 
-**Feature Flow — every feature:**
-`1 Plan + DoD` → `2 HUMAN APPROVAL (STOP)` → `3 Implement on feat/<name>` → `4 Test green` → `5 Commit` → `6 Review (fresh context) + human mobile check` → `7 PR + CI` → `8 Merge` → next feature at `1`
+### Feature Flow (repeat for every feature inside Build)
 
-- Failure at `4`, `6` or `7` → back to `3`. Fix is not a separate step.
-- Gates: no code before `2`; no commit before `4`; no merge with red CI, and no merge of a UI feature before the human says OK.
+```mermaid
+flowchart TD
+    P["1. Plan + Definition of Done"] --> R{"2. Review & Approve (human)"}
+    R -- "changes needed" --> P
+    R -- approved --> I["3. Implement (open branch feat/name)"]
+    I --> T{"4. Test passes?"}
+    T -- no --> I
+    T -- yes --> C["5. Commit"]
+    C --> RV{"6. Review Code & UI ok?"}
+    RV -- "issues found" --> I
+    RV -- ok --> PR["7. PR + CI"]
+    PR --> CI{"CI green?"}
+    CI -- no --> I
+    CI -- yes --> M["8. Auto-merge into main"]
+    M --> P
+```
 
-Human-readable diagrams of the same two flows: `docs/WORKFLOW.md`. Read that file only when the sequence above is ambiguous — the text above is the source of truth.
+Fix is not a separate step. Any failure (Test, Review, CI) sends you back to Implement.
 
 ## Code Rules
 - Clean, modular code. One responsibility per file.

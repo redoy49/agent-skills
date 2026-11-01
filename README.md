@@ -24,7 +24,7 @@ readable, not so anything discovers them. Antigravity discovers a skill by
 
 | Skill | Category | Trigger (when the agent loads it) | Ships |
 |---|---|---|---|
-| [`nextjs-production-stack`](skills/web/nextjs-production-stack/SKILL.md) | web | any Next.js App Router work: new project, feature, page/route, form, auth, DB schema, tests, Vercel deploy | `templates/AGENTS.md` project rule, `templates/WORKFLOW.md` diagrams |
+| [`nextjs-production-stack`](skills/web/nextjs-production-stack/SKILL.md) | web | any Next.js App Router work: new project, feature, page/route, form, auth, DB schema, tests, Vercel deploy | `templates/AGENTS.md` project rule |
 
 <!-- add a row per new skill; keep the Trigger column short and concrete -->
 
@@ -44,9 +44,8 @@ cp -r skills/web/nextjs-production-stack ~/AppData/Local/hermes/skills/
 After a **global** install, restart Antigravity once — new skill directories are
 discovered at app start. Content edits to an existing skill need no restart.
 
-`templates/` files are **not** installed by the agent: copy them yourself.
-`templates/AGENTS.md` → `<project>/AGENTS.md` (fill in the placeholders),
-`templates/WORKFLOW.md` → `<project>/docs/WORKFLOW.md`.
+`templates/` files are **not** installed by the agent: copy `templates/AGENTS.md`
+to `<project>/AGENTS.md` and fill in the placeholders.
 
 ## Writing the next skill
 

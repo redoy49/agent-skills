@@ -172,9 +172,8 @@ When asked to add a feature in a project using this stack:
 6. Run lint/typecheck mentally against strict mode before presenting code; flag any `any`, unchecked input, or missing auth check rather than shipping it quietly.
 7. Before introducing, replacing, or skipping any tool from section 0, ask the user with options (see the "Recommended, not strict" rule in section 0).
 
-## 16. Companion files
+## 16. Companion rule file
 
 - `AGENTS.md` — the project workflow rule (Main Flow, Feature Flow, approval gate, commit/PR rules). Copy it to the **repo root** and fill in `[PROJECT_NAME]` + the goal line. Keep it per-project, never global: it forces a Next.js feature flow.
-- `templates/WORKFLOW.md` — the same two workflows as diagrams, for humans. Copy it to `<project>/docs/WORKFLOW.md`; it is linked from `AGENTS.md`, and the text in `AGENTS.md` is normative if they ever disagree.
 
 Install this skill at `.agents/skills/nextjs-production-stack/` in the repo (shared via VCS, wins over the global copy) or at `~/.gemini/config/skills/nextjs-production-stack/` for every project.
